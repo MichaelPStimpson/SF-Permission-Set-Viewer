@@ -1,0 +1,31 @@
+<template>
+    <lightning-layout>
+        <lightning-layout-item>
+            <lightning-card title="Permission Set Viewer">
+                <div class="slds-m-horizontal_medium">
+                    <lightning-combobox label="Permission Set" placeholder="--None--" value={selectedPermissionSet} options={permissionSets} onchange={permissionSetSelected}></lightning-combobox>
+                    <br>
+                    <template if:true={loaded}>
+                        <lightning-tabset>
+                            <lightning-tab value="Fields" label="Fields" onactive={tabChange}>
+                                <lightning-datatable key-field="id" data={results} columns={permissionSetColumns}></lightning-datatable>
+                            </lightning-tab>
+                            <lightning-tab value="Objects" label="Objects" onactive={tabChange}>
+                                <lightning-datatable key-field="id" data={results} columns={objectColumns}></lightning-datatable>
+                            </lightning-tab>
+                            <lightning-tab value="Setup" label="Setup" onactive={tabChange}>
+                                <lightning-datatable key-field="id" data={results} columns={setupColumns}></lightning-datatable>
+                            </lightning-tab>
+                        </lightning-tabset>
+                    </template>
+                    <!--Display a spinner if data is still being queried-->
+                    <template if:false={loaded}>
+                        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                        <!--Table only cosmetic-->
+                        <lightning-datatable key-field="id" data={results} columns={permissionSetColumns}></lightning-datatable>
+                    </template>
+                </div>
+            </lightning-card>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
